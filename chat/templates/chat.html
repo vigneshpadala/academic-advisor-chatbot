@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Academic Chatbot</title>
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+</head>
+<body>
+
+<div class="chat-container">
+    <header>
+        <h2>🎓 Academic Analytics Chatbot</h2>
+        <p>Ask about students, toppers, semesters & analytics</p>
+    </header>
+
+    <div id="chat-box"></div>
+
+    <div class="suggestions">
+        <h4>💡 Try asking:</h4>
+        <button onclick="sendSuggestion('top 10 students')">Top 10 Students</button>
+        <button onclick="sendSuggestion('1-1 topper')">1-1 Semester Topper</button>
+        <button onclick="sendSuggestion('student 48 cgpa')">Student CGPA</button>
+        <button onclick="sendSuggestion('student 14 vs student 48')">Compare Students</button>
+        <button onclick="sendSuggestion('student 48 1-2 external marks')">Semester External Marks</button>
+        <button onclick="sendSuggestion('cgpa distribution')">CGPA Chart</button>
+        <button onclick="sendSuggestion('export all reports csv')">Export All CSV</button>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="Type your question..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script src="{% static 'js/chat.js' %}"></script>
+</body>
+</html>

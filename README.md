@@ -1,122 +1,108 @@
-🎓 Academic Advisor Chatbot (Django)
+# 🎓 Academic Advisor Chatbot (Django)
 
-A smart Academic Advisor Chatbot built using Django that helps students access academic information such as profiles, results, and guidance through a conversational web interface.
+A smart **Academic Advisor Chatbot** built using **Django** that helps students access academic information such as profiles, results, and guidance through a conversational web interface.
 
 This project simulates a real-world academic assistant for students and demonstrates backend logic, Django architecture, and chatbot-style interactions.
 
+---
 
-🚀 Features
+## 🚀 Features
 
-💬 Chat-based academic assistant
+- 💬 Chat-based academic assistant
+- 👤 Student profile information support
+- 📊 Academic results & semester details
+- 🧠 Rule-based intelligent responses
+- 🔐 Secure Django backend with CSRF protection
+- 🌐 Clean and responsive web UI
+- 🗂 Modular and scalable Django project structure
 
-👤 Student profile information support
+---
 
-📊 Academic results & semester details
+## 🛠 Tech Stack
 
-🧠 Rule-based intelligent responses
+**Backend**
+- Python
+- Django
 
-🔐 Secure Django backend with CSRF protection
+**Frontend**
+- HTML
+- CSS
+- JavaScript
 
-🌐 Clean and responsive web UI
+**Database**
+- SQLite (default Django database)
 
-🗂 Modular and scalable Django project structure
+**Version Control**
+- Git & GitHub
 
+**Deployment Support**
+- Render / Railway (Backend)
 
-🛠 Tech Stack
+---
 
-Backend:
+## ⚙️ Installation & Setup
 
-Python
+### Prerequisites
 
-Django
+- Python 3.10+
+- pip
+- Git
 
-Frontend:
+---
 
-HTML
+### Backend Setup (Django)
 
-CSS
-
-JavaScript
-
-Database:
-
-SQLite (default Django database)
-
-Version Control:
-
-Git & GitHub
-
-Deployment Support:
-
-Render / Railway (backend)
-
-
-⚙️ Installation & Setup
-Prerequisites
-
-Python 3.10+
-
-pip
-
-Git
-
-
-Backend Setup (Django)
-
-Clone the repository
-
+1. **Clone the repository**
+```bash
 git clone https://github.com/vigneshpadala/academic-advisor-chatbot.git
-
-
 Navigate to project folder
 
+bash
+Copy code
 cd academic-advisor-chatbot
-
-
 Create virtual environment
 
+bash
+Copy code
 python -m venv venv
-
-
 Activate virtual environment
 
-Windows:
+Windows
 
+bash
+Copy code
 venv\Scripts\activate
+Mac / Linux
 
-
-Mac/Linux:
-
+bash
+Copy code
 source venv/bin/activate
-
-
 Install dependencies
 
+bash
+Copy code
 pip install -r requirements.txt
-
-
 Apply migrations
 
+bash
+Copy code
 python manage.py migrate
-
-
 Run development server
 
+bash
+Copy code
 python manage.py runserver
-
-
 ✅ App runs at:
 
+cpp
+Copy code
 http://127.0.0.1:8000/
-
-
 📖 Usage
-
 Open browser and go to:
 
+cpp
+Copy code
 http://127.0.0.1:8000/
-
-
 Start chatting with the Academic Advisor Bot
 
 You can ask about:
@@ -129,10 +115,11 @@ Semester details
 
 General academic help
 
-Bot responds dynamically based on logic
-
+The chatbot responds dynamically based on implemented logic
 
 📁 Project Structure
+cpp
+Copy code
 chatbot_project/
 │
 ├── chatbot_app/
@@ -151,47 +138,41 @@ chatbot_project/
 ├── manage.py
 ├── requirements.txt
 └── README.md
-
-
 🌐 Deployment
 Backend Deployment (Render / Railway)
-Push code to GitHub
+Push the code to GitHub
 
-Connect repository to Render or Railway
+Connect the repository to Render or Railway
 
-Set build command:
+Set Build Command
 
 bash
 Copy code
 pip install -r requirements.txt
-Start command:
+Set Start Command
 
 bash
 Copy code
 gunicorn chatbot_project.wsgi
-Add environment variables if required
+Add required environment variables if needed
 
 Deploy 🚀
 
-
-
-
 🔮 Future Improvements
-
 🤖 AI-powered chatbot (OpenAI / LLM integration)
 
 🔐 Student authentication (login & signup)
 
-📊 Database-backed real student results
+📊 Database-backed real student academic results
 
-📱 Mobile responsive UI
+📱 Fully mobile-responsive UI
 
 🧠 NLP-based query understanding
 
 🎓 Admin dashboard for academic management
 
 👨‍💻 Author
-
 Vignesh Padala
 📍 Hyderabad, India
 🔗 GitHub: https://github.com/vigneshpadala
+

@@ -33,33 +33,23 @@ This project is designed to simulate a real academic assistant that responds to 
 chatbot_project/
 │
 ├── chatbot_app/
-| |
 │ ├── migrations/
-| |
 │ ├── templates/
-| |
 │ ├── static/
-| |
 │ ├── views.py
-| |
 │ ├── models.py
-| |
 │ └── urls.py
 │
-|
 ├── chatbot_project/
-| |
 │ ├── settings.py
-| |
 │ ├── urls.py
-| |
 │ └── wsgi.py
 │
 ├── manage.py
-|
 ├── requirements.txt
-|
 └── README.md
+
+
 
 ---
 

@@ -1,5 +1,9 @@
 from .models import PDFDocument
 import re
+from django.shortcuts import render
+from django.http import HttpResponse
+
+
 
 
 # ================================
@@ -105,14 +109,74 @@ def get_semester_topper(semester):
     return (topper_student, round(topper_sgpa, 2)) if topper_student else (None, None)
 
 
+def extract_student_profile(text):
+    # Normalize whitespace
+    text = re.sub(r"\s+", " ", text)
+
+    def find(pattern, group=0):
+        """
+        group=0 → full match
+        group=1 → first capturing group
+        """
+        m = re.search(pattern, text, re.IGNORECASE)
+        if not m:
+            return "Not available"
+        return m.group(group).strip()
+
+    # -------------------------------
+    # NAME (ignore headings like ACADEMIC RESULTS)
+    # -------------------------------
+    name = "Not available"
+    for match in re.findall(r"\b[A-Z]{3,}(?:\s+[A-Z]{3,}){1,3}\b", text):
+        if match not in ["ACADEMIC RESULTS", "SUBJECT NAME", "COLLEGE NAME"]:
+            name = match
+            break
+
+    profile = {
+        # 👤 Basic Info
+        "name": name,
+
+        # Roll number → NO capturing group → group=0
+        "rollno": find(r"\b\d{2,}[A-Z0-9]{4,}\b", 0),
+
+        "branch": find(
+            r"(CSE\s*\(.*?\)|COMPUTER\s*SCIENCE.*?ENGINEERING.*?)", 1
+        ),
+
+        "college": find(
+            r"(KASIREDDY\s*NARAYAN\s*REDDY\s*COLLEGE.*?RESEARCH)", 1
+        ),
+    }
+
+    return profile
+
+
+
 # ================================
 # 🔹 Chatbot main logic
 # ================================
 def chatbot_response(user_input):
-    user_input = user_input.lower()
+    user_input = user_input.lower().strip()
 
     # =====================================================
-    # 🥇 SEMESTER-WISE TOPPER
+    # 👋 GREETING
+    # =====================================================
+    if re.fullmatch(r"(hi|hello|hey|hai|hii)", user_input):
+        return (
+        "👋 Hello! Welcome to the Student Academic Assistant😊\n\n"
+        "I can help you explore student profiles, CGPA, semester toppers, comparisons, and academic insights.\n\n"
+        "Try:\n"
+        "• Student rollno → full profile \n"
+        "• Student rollno CGPA\n"
+        "• Student rollno backlogs\n"
+        "• Student rollno best semester\n"
+        "• Student rollno vs Student rollno comparison\n"
+        "• Top 10 students\n"
+        "• 1-1 semester topper\n\n"
+    )
+
+    # =====================================================
+    # 🥇 SEMESTER TOPPER (FIRST)
     # =====================================================
     sem_match = re.search(r"(1-1|1-2|2-1|2-2)", user_input)
     if sem_match and "topper" in user_input:
@@ -120,96 +184,140 @@ def chatbot_response(user_input):
         student_no, sgpa = get_semester_topper(semester)
 
         if not student_no:
-            return f"❌ No SGPA data found for {semester} semester."
+            return f"❌ No topper data found for {semester} semester."
 
         return (
-            f"🥇 Semester Topper – {semester}\n\n" +
-            format_table(
+            f"🥇 Semester Topper – {semester}\n\n"
+            + format_table(
                 ["Rank", "Student", "SGPA"],
                 [(1, f"Student {student_no}", sgpa)]
             )
         )
 
     # =====================================================
-    # 🏆 TOPPER RANKING
+    # 🏆 OVERALL TOPPER RANKING
     # =====================================================
     if re.search(r"topper|ranking|rank|top\s*\d*", user_input):
-        limit = int(re.search(r"top\s*(\d+)", user_input).group(1)) if re.search(r"top\s*(\d+)", user_input) else 5
+        limit_match = re.search(r"top\s*(\d+)", user_input)
+        limit = int(limit_match.group(1)) if limit_match else 5
+
         toppers = get_topper_ranking(limit)
+        if not toppers:
+            return "❌ No CGPA data available."
 
         return (
-            "🏆 Topper Ranking (Based on CGPA)\n\n" +
-            format_table(
+            "🏆 Topper Ranking (Based on CGPA)\n\n"
+            + format_table(
                 ["Rank", "Student", "CGPA"],
                 [(i + 1, f"Student {s}", cgpa) for i, (s, cgpa) in enumerate(toppers)]
             )
         )
 
     # =====================================================
-    # 🔹 STUDENT COMPARISON
+    # 📊 STUDENT COMPARISON
     # =====================================================
     cmp = re.search(r"student\s*(\d+)\s*(vs|and)\s*student?\s*(\d+)", user_input)
     if cmp:
-        d1 = PDFDocument.objects.filter(file_name=f"{cmp.group(1)}.pdf").first()
-        d2 = PDFDocument.objects.filter(file_name=f"{cmp.group(3)}.pdf").first()
+        s1, s2 = cmp.group(1), cmp.group(3)
+
+        d1 = PDFDocument.objects.filter(file_name=f"{s1}.pdf").first()
+        d2 = PDFDocument.objects.filter(file_name=f"{s2}.pdf").first()
+
         if not d1 or not d2:
             return "❌ One or both student records not found."
 
-        s1, s2 = extract_student_summary(d1), extract_student_summary(d2)
-        return "📊 Student Comparison\n\n" + format_table(
-            ["Metric", f"Student {cmp.group(1)}", f"Student {cmp.group(3)}"],
-            [
-                ("CGPA", s1["cgpa"], s2["cgpa"]),
-                ("Backlogs", s1["backlogs"], s2["backlogs"]),
-                ("Best Semester", s1["best_semester"], s2["best_semester"]),
-                ("Best SGPA", s1["best_sgpa"], s2["best_sgpa"]),
-            ]
-        )
-
-    # =====================================================
-    # 🔹 SINGLE STUDENT FLOW
-    # =====================================================
-    sm = re.search(r"student\s*(\d+)|\b(\d+)\b", user_input)
-    if not sm:
-        return "❗ Please mention the student number (example: student 48 cgpa)."
-
-    student_no = sm.group(1) or sm.group(2)
-    doc = PDFDocument.objects.filter(file_name=f"{student_no}.pdf").first()
-    if not doc:
-        return f"❌ Student {student_no} record not found."
-
-    # Semester external marks
-    if sem_match and ("external" in user_input or "marks" in user_input):
-        rows = extract_external_marks_by_semester(doc.content, sem_match.group(1))
-        if not rows:
-            return f"❌ External marks not found for {sem_match.group(1)} semester."
+        s1_data = extract_student_summary(d1)
+        s2_data = extract_student_summary(d2)
 
         return (
-            f"📘 Student {student_no} – {sem_match.group(1)} Semester External Marks\n\n" +
-            format_table(
-                ["Subject", "External Marks"],
-                [(s.title(), m) for s, m in rows]
+            "📊 Student Comparison\n\n"
+            + format_table(
+                ["Metric", f"Student {s1}", f"Student {s2}"],
+                [
+                    ("CGPA", s1_data["cgpa"], s2_data["cgpa"]),
+                    ("Backlogs", s1_data["backlogs"], s2_data["backlogs"]),
+                    ("Best Semester", s1_data["best_semester"], s2_data["best_semester"]),
+                    ("Best SGPA", s1_data["best_sgpa"], s2_data["best_sgpa"]),
+                ]
             )
         )
 
-    if "cgpa" in user_input:
-        return f"📘 Student {student_no} CGPA is {extract_cgpa(doc.content)}"
+    # =====================================================
+    # 👤 SINGLE STUDENT (LAST)
+    # =====================================================
+    sm = re.search(r"(?:student\s*)?(\d+)", user_input)
+    if sm:
+        student_no = sm.group(1)
+        doc = PDFDocument.objects.filter(file_name=f"{student_no}.pdf").first()
 
-    if "backlog" in user_input:
-        return f"📘 Student {student_no} has {extract_backlogs(doc.content)} backlogs."
+        if not doc:
+            return f"❌ Student {student_no} record not found."
 
-    if "best semester" in user_input:
-        sem, sgpa = extract_best_semester(doc.content)
-        return f"📘 Student {student_no}'s best semester is {sem} with SGPA {sgpa}."
+        # CGPA only
+        if "cgpa" in user_input:
+            cgpa = extract_cgpa(doc.content)
+            return f"📊 Student {student_no} CGPA: {cgpa if cgpa else 'N/A'}"
+
+        # Backlogs
+        if "backlog" in user_input:
+            return f"📘 Student {student_no} Backlogs: {extract_backlogs(doc.content)}"
+
+        # Best semester
+        if "best semester" in user_input:
+            sem, sgpa = extract_best_semester(doc.content)
+            return f"📘 Best Semester: {sem}, SGPA: {sgpa}"
+
+        # FULL PROFILE (only when user says just number)
+        if re.fullmatch(r"(student\s*)?\d+", user_input):
+            profile = extract_student_profile(doc.content)
+            summary = extract_student_summary(doc)
+
+            return (
+    "👤 Student Profile\n\n"
+    f"Name         : {profile.get('name')}\n"
+    f"Roll No      : {profile.get('rollno')}\n"
+    f"Branch       : {profile.get('branch')}\n"
+    f"College      : {profile.get('college')}\n\n"
+    "📊 Academic Summary\n"
+    f"CGPA         : {summary['cgpa']}\n"
+    f"Backlogs     : {summary['backlogs']}\n"
+    f"Best Sem     : {summary['best_semester']}\n"
+    f"Best SGPA    : {summary['best_sgpa']}"
+)
+
+
+# =====================================================
+# 🤖 FALLBACK (SMART HELP MESSAGE)
+# =====================================================
 
     return (
-        f"❗ What information do you want about Student {student_no}?\n"
-        f"You can ask: CGPA, backlogs, best semester, semester external marks, "
-        f"comparison, topper ranking."
-    )
+    "🤖 I can help with student academic details.\n\n"
+    "You can ask things like:\n"
+    "• Student → full profile\n"
+    "• Student CGPA\n"
+    "• Student backlogs\n"
+    "• Student best semester\n"
+    "• Student  vs Student comparison\n"
+    "• Top 10 students\n"
+    "• 1-1 semester topper\n\n"
+    "📌 Tip: Just type the student number to see full details."
+)
 
 
 
+
+def chat_view(request):
+    if request.method == "POST":
+        user_msg = request.POST.get("message", "")
+        response = chatbot_response(user_msg)
+
+        # If response is HttpResponse (CSV / image)
+        if isinstance(response, HttpResponse):
+            return response
+
+        return HttpResponse(response)
+
+    return render(request, "chat.html")
 
 
 

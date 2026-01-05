@@ -1,85 +1,197 @@
-# 🎓 Academic Advisor Chatbot
+🎓 Academic Advisor Chatbot (Django)
 
-An **Academic Advisor Chatbot** built using **Django** that helps students access academic-related information such as profiles, results, and guidance through a conversational interface.
+A smart Academic Advisor Chatbot built using Django that helps students access academic information such as profiles, results, and guidance through a conversational web interface.
 
-This project is designed to simulate a real academic assistant that responds to student queries in a simple and interactive way.
-
----
-
-## 🚀 Features
-
-- 👤 Student profile display
-- 📊 Academic results support
-- 💬 Chat-based interaction
-- 🧠 Rule-based / logic-driven responses
-- 🌐 Web-based interface
-- 🔐 CSRF protection enabled
-- 🗂 Clean and scalable Django project structure
-
----
+This project simulates a real-world academic assistant for students and demonstrates backend logic, Django architecture, and chatbot-style interactions.
 
 
-## 🛠 Tech Stack
+🚀 Features
 
-- **Backend:** Python, Django  
-- **Frontend:** HTML, CSS, JavaScript  
-- **Database:** SQLite (default Django DB)  
-- **Version Control:** Git & GitHub  
+💬 Chat-based academic assistant
 
----
+👤 Student profile information support
 
-## ⚙️ How It Works
+📊 Academic results & semester details
 
-1. User opens the chatbot in the browser.
-2. Student enters a query (example: profile, results).
-3. JavaScript sends the message to Django backend.
-4. Django processes the request and generates a response.
-5. The chatbot replies dynamically on the UI.
+🧠 Rule-based intelligent responses
 
----
+🔐 Secure Django backend with CSRF protection
+
+🌐 Clean and responsive web UI
+
+🗂 Modular and scalable Django project structure
 
 
-## 🧪 Run Project Locally (localhost)
+🛠 Tech Stack
 
-### 1️⃣ Clone the Repository
-```bash
+Backend:
+
+Python
+
+Django
+
+Frontend:
+
+HTML
+
+CSS
+
+JavaScript
+
+Database:
+
+SQLite (default Django database)
+
+Version Control:
+
+Git & GitHub
+
+Deployment Support:
+
+Render / Railway (backend)
+
+
+⚙️ Installation & Setup
+Prerequisites
+
+Python 3.10+
+
+pip
+
+Git
+
+
+Backend Setup (Django)
+
+Clone the repository
+
 git clone https://github.com/vigneshpadala/academic-advisor-chatbot.git
 
-###2️⃣ Go to Project Folder
+
+Navigate to project folder
+
 cd academic-advisor-chatbot
 
-###3️⃣ Create Virtual Environment (Recommended)
+
+Create virtual environment
+
 python -m venv venv
 
-##Activate:
-##Windows
+
+Activate virtual environment
+
+Windows:
+
 venv\Scripts\activate
 
-##Mac/Linux
+
+Mac/Linux:
+
 source venv/bin/activate
 
-###4️⃣ Install Dependencies
+
+Install dependencies
+
 pip install -r requirements.txt
 
-##5️⃣ Apply Migrations
+
+Apply migrations
+
 python manage.py migrate
 
-##6️⃣ Run the Server
-python manage.py runserver
-(or)
-py manage.py runserver
 
-##7️⃣ Open in Browser
+Run development server
+
+python manage.py runserver
+
+
+✅ App runs at:
+
 http://127.0.0.1:8000/
 
----
+
+📖 Usage
+
+Open browser and go to:
+
+http://127.0.0.1:8000/
 
 
-📌 How to Use
-Open the chatbot page
+Start chatting with the Academic Advisor Bot
 
-Enter student-related queries
+You can ask about:
 
-Get instant academic responses
+Student profile
+
+Academic results
+
+Semester details
+
+General academic help
+
+Bot responds dynamically based on logic
 
 
+📁 Project Structure
+chatbot_project/
+│
+├── chatbot_app/
+│   ├── migrations/
+│   ├── templates/
+│   ├── static/
+│   ├── views.py
+│   ├── models.py
+│   └── urls.py
+│
+├── chatbot_project/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+│
+├── manage.py
+├── requirements.txt
+└── README.md
+
+
+🌐 Deployment
+Backend Deployment (Render / Railway)
+Push code to GitHub
+
+Connect repository to Render or Railway
+
+Set build command:
+
+bash
+Copy code
+pip install -r requirements.txt
+Start command:
+
+bash
+Copy code
+gunicorn chatbot_project.wsgi
+Add environment variables if required
+
+Deploy 🚀
+
+
+
+
+🔮 Future Improvements
+
+🤖 AI-powered chatbot (OpenAI / LLM integration)
+
+🔐 Student authentication (login & signup)
+
+📊 Database-backed real student results
+
+📱 Mobile responsive UI
+
+🧠 NLP-based query understanding
+
+🎓 Admin dashboard for academic management
+
+👨‍💻 Author
+
+Vignesh Padala
+📍 Hyderabad, India
+🔗 GitHub: https://github.com/vigneshpadala

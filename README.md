@@ -79,7 +79,6 @@ python manage.py migrate
 http://127.0.0.1:8000/
 
 
-
 📖 Usage
 Open browser and visit:
 
@@ -101,6 +100,8 @@ General academic help
 The chatbot responds dynamically based on implemented logic
 
 📁 Project Structure
+cpp
+Copy code
 chatbot_project/
 │
 ├── chatbot_app/
@@ -119,8 +120,6 @@ chatbot_project/
 ├── manage.py
 ├── requirements.txt
 └── README.md
-
-
 🌐 Deployment
 Backend Deployment (Render / Railway)
 Push the code to GitHub

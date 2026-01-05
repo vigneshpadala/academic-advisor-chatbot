@@ -55,50 +55,33 @@ This project simulates a real-world academic assistant for students and demonstr
 1. **Clone the repository**
 ```bash
 git clone https://github.com/vigneshpadala/academic-advisor-chatbot.git
-Navigate to project folder
 
-bash
-Copy code
+2️⃣ Navigate to Project Folder
 cd academic-advisor-chatbot
-Create virtual environment
 
-bash
-Copy code
+3️⃣ Create Virtual Environment
 python -m venv venv
-Activate virtual environment
 
+4️⃣ Activate Virtual Environment
 Windows
-
-bash
-Copy code
 venv\Scripts\activate
+
 Mac / Linux
-
-bash
-Copy code
 source venv/bin/activate
-Install dependencies
 
-bash
-Copy code
+5️⃣ Install Dependencies
 pip install -r requirements.txt
-Apply migrations
 
-bash
-Copy code
+6️⃣ Apply Migrations
 python manage.py migrate
-Run development server
 
-bash
-Copy code
-python manage.py runserver
 ✅ App runs at:
-
-cpp
-Copy code
 http://127.0.0.1:8000/
+
+
+
 📖 Usage
-Open browser and go to:
+Open browser and visit:
 
 cpp
 Copy code
@@ -118,8 +101,6 @@ General academic help
 The chatbot responds dynamically based on implemented logic
 
 📁 Project Structure
-cpp
-Copy code
 chatbot_project/
 │
 ├── chatbot_app/
@@ -138,19 +119,19 @@ chatbot_project/
 ├── manage.py
 ├── requirements.txt
 └── README.md
+
+
 🌐 Deployment
 Backend Deployment (Render / Railway)
 Push the code to GitHub
 
 Connect the repository to Render or Railway
 
-Set Build Command
-
+Build Command
 bash
 Copy code
 pip install -r requirements.txt
-Set Start Command
-
+Start Command
 bash
 Copy code
 gunicorn chatbot_project.wsgi
@@ -175,4 +156,6 @@ Deploy 🚀
 Vignesh Padala
 📍 Hyderabad, India
 🔗 GitHub: https://github.com/vigneshpadala
+
+
 

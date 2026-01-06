@@ -53,10 +53,10 @@ This project simulates a real-world academic assistant for students and demonstr
 ### Backend Setup (Django)
 
 1. **Clone the repository**
-```bash
+bash
 git clone https://github.com/vigneshpadala/academic-advisor-chatbot.git
 
-2️⃣ Navigate to Project Folder
+2️. Navigate to Project Folder
 cd academic-advisor-chatbot
 
 3️⃣ Create Virtual Environment

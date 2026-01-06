@@ -6,6 +6,14 @@ This project simulates a real-world academic assistant for students and demonstr
 
 ---
 
+## 🌐 Live Demo
+
+👉 Click here to view the live application: 
+
+🔗 [Academic Advisor Chatbot – Live](https://vigneshpadala48.pythonanywhere.com/)
+
+---
+
 ## 🚀 Features
 
 - 💬 Chat-based academic assistant
@@ -181,10 +189,9 @@ Vignesh Padala
 
 ---
 
-## 🌐 Live Demo
+## 📜 License
 
-👉 Click here to view the live application: 
+This project is licensed under the **MIT License**.
 
-🔗 [Academic Advisor Chatbot – Live](https://vigneshpadala48.pythonanywhere.com/)
 
 

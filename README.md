@@ -52,120 +52,139 @@ This project simulates a real-world academic assistant for students and demonstr
 
 ### Backend Setup (Django)
 
-**Clone the repository**
-
-bash
+**1.Clone the repository**
 
 git clone https://github.com/vigneshpadala/academic-advisor-chatbot.git
 
-
 ---
-### Navigate to project
+
+**2.Navigate to project**
+
 cd academic-advisor-chatbot
 
 ---
 
-### Create Virtual Environment
+**3.Create Virtual Environment**
+
 python -m venv venv
 
 ---
 
-###
+**4.Activate Virtual Environment**
 
-4️.Activate Virtual Environment
-Windows
+*Windows:*
+
 venv\Scripts\activate
 
-Mac / Linux
+*Mac / Linux:*
+
 source venv/bin/activate
 
-5. Install Dependencies
+---
+
+**5.Install Dependencies**
+
 pip install -r requirements.txt
 
-6️. Apply Migrations
+---
+
+**6.Apply Migrations**
+
 python manage.py migrate
 
-✅ App runs at:
+---
+
+**7.Run development server**
+
+python manage.py runserver
+
+---
+
+### ✅ App runs at:
+
 http://127.0.0.1:8000/
 
 ---
 
-📖 Usage
-Open browser and visit:
 
-cpp
-Copy code
+## 📖 Usage
+
+1.*Open browser and visit:*
+
 http://127.0.0.1:8000/
-Start chatting with the Academic Advisor Bot
 
-You can ask about:
+2.*Start chatting with the Academic Advisor Bot*
 
-Student profile
+*3.You can ask about:*
 
-Academic results
+->Student profile
 
-Semester details
+->Academic results
 
-General academic help
+->Semester details
 
-The chatbot responds dynamically based on implemented logic
+->General academic help
 
-📁 Project Structure
-cpp
-Copy code
-chatbot_project/
-│
-├── chatbot_app/
-│   ├── migrations/
-│   ├── templates/
-│   ├── static/
-│   ├── views.py
-│   ├── models.py
-│   └── urls.py
-│
-├── chatbot_project/
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-│
-├── manage.py
-├── requirements.txt
-└── README.md
-🌐 Deployment
-Backend Deployment (Render / Railway)
-Push the code to GitHub
+*4.The chatbot responds dynamically based on implemented logic*
 
-Connect the repository to Render or Railway
 
-Build Command
-bash
-Copy code
+
+---
+
+## 🌐 Deployment
+
+**Backend Deployment (Render / Railway)**
+
+*1.Push the code to GitHub*
+
+*2.Connect the repository to Render or Railway*
+
+*3.Set build command:*
+
 pip install -r requirements.txt
-Start Command
-bash
-Copy code
+
+*4.Start Command:*
+
 gunicorn chatbot_project.wsgi
-Add required environment variables if needed
 
-Deploy 🚀
+*5.Add required environment variables if needed*
 
-🔮 Future Improvements
-🤖 AI-powered chatbot (OpenAI / LLM integration)
+*6.Deploy 🚀*
 
-🔐 Student authentication (login & signup)
+---
 
-📊 Database-backed real student academic results
+## 🔮 Future Improvements
 
-📱 Fully mobile-responsive UI
+*🤖 AI-powered chatbot (OpenAI / LLM integration)*
 
-🧠 NLP-based query understanding
+*🔐 Student authentication (login & signup)*
 
-🎓 Admin dashboard for academic management
+*📊 Database-backed real student academic results*
 
-👨‍💻 Author
+*📱 Fully mobile-responsive UI*
+
+*🧠 NLP-based query understanding*
+
+*🎓 Admin dashboard for academic management*
+
+---
+
+## 👨‍💻 Author:
+
 Vignesh Padala
+
 📍 Hyderabad, India
+
 🔗 GitHub: https://github.com/vigneshpadala
 
+🔗 linkedin : https://www.linkedin.com/in/vignesh-padala-817b85344
+
+---
+
+## 🌐 Live Demo
+
+👉 Click here to view the live application: 
+
+🔗 [Academic Advisor Chatbot – Live](https://vigneshpadala48.pythonanywhere.com/)
 
 

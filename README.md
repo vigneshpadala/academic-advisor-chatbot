@@ -33,3 +33,9 @@ http://127.0.0.1:8000
 
 ## 🌐 Live Demo
 https://vigneshpadala48.pythonanywhere.com/
+
+## 👤 Author
+
+Vignesh Padala
+
+B.Tech CSE (AI & ML) Student

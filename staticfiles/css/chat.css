@@ -1,0 +1,172 @@
+* {
+    font-family: "Segoe UI", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f") center/cover;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 20, 30, 0.85);
+}
+
+.chat-wrapper {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-card {
+    width: 900px;
+    background: rgba(25, 40, 55, 0.75);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 25px;
+    color: #fff;
+    box-shadow: 0 0 40px rgba(0,255,255,0.2);
+}
+
+.chat-header {
+    display: flex;
+    gap: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 15px;
+}
+
+.chat-header .icon {
+    font-size: 36px;
+}
+
+#chat-box {
+    height: 320px;
+    overflow-y: auto;
+    margin: 20px 0;
+    padding-right: 10px;
+}
+
+.message {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    max-width: 90%;
+}
+
+.user {
+    background: #d4dcdd;
+    color: #000;
+    margin-left: auto;
+}
+
+.bot {
+    background: rgba(255,255,255,0.1);
+}
+
+.input-area {
+    display: flex;
+    gap: 10px;
+}
+
+.input-area input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+}
+
+.input-area button {
+    padding: 12px 20px;
+    background: #eaedee;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.suggestions, .footer-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+button {
+    background: rgba(0,229,255,0.15);
+    color: #00e5ff;
+    border: 1px solid rgba(0,229,255,0.4);
+    border-radius: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+/* ===== TABLE STYLES ===== */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.data-table th {
+    background: rgba(0,229,255,0.25);
+    color: #00e5ff;
+    padding: 10px;
+}
+
+.data-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+}
+
+.data-table tr:hover {
+    background: rgba(0,229,255,0.1);
+}
+
+
+/* ===== STUDENT PROFILE CARD ===== */
+
+.profile-card {
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0,229,255,0.3);
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 10px;
+}
+
+.profile-card h4 {
+    color: #00e5ff;
+    margin: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 5px;
+}
+
+.profile-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.15);
+}
+
+.profile-row:last-child {
+    border-bottom: none;
+}
+
+.profile-row .label {
+    color: #9eefff;
+    font-weight: 600;
+}
+
+.profile-row .value {
+    color: #ffffff;
+    font-weight: 500;
+}

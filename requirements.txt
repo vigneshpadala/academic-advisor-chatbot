@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-pymupdf
-google-generativeai
-django
-=======
 Django
->>>>>>> 61a0c2d4f80eacabfb4599ef1939aa4dcf25bebc
 gunicorn
 pymupdf
 google-generativeai

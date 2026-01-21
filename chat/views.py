@@ -2,10 +2,6 @@ from .models import PDFDocument
 import re
 from django.shortcuts import render
 from django.http import HttpResponse
-
-
-
-
 # ================================
 # 🔹 Helper functions
 # ================================

@@ -139,6 +139,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent

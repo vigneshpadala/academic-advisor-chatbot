@@ -5,45 +5,38 @@
     <meta charset="UTF-8">
     <title>Academic Advisor Chatbot</title>
     <link rel="stylesheet" href="{% static 'css/chat.css' %}">
-    <script src="{% static 'js/chat.js' %}"></script>
 </head>
 <body>
 
-<div class="overlay"></div>
+<!-- 🔴 REQUIRED: this sets CSRF cookie -->
+<form method="post" style="display:none;">
+    {% csrf_token %}
+</form>
 
 <div class="chat-wrapper">
     <div class="chat-card">
 
         <div class="chat-header">
-            <div class="icon">🎓</div>
-            <div>
-                <h2>Academic Advisor Chatbot</h2>
-                <p>Student Analytics & Performance Insights</p>
-            </div>
+            <h2>🎓 Academic Advisor Chatbot</h2>
+            <p>Student Analytics & Performance Insights</p>
         </div>
 
         <div id="chat-box"></div>
 
         <div class="suggestions">
             <button onclick="sendQuick('top 10 students')">🏆 Top 10 Students</button>
-            <button onclick="sendQuick('1-2 topper')">🥇 Semester Topper</button>
-            <button onclick="sendQuick('student 48 cgpa')">📊 Student CGPA</button>
-            <button onclick="sendQuick('student 14 vs student 48')">📊 Compare</button>
-            {% comment %} <button onclick="sendQuick('export all csv')">⬇ Export CSV</button>
-            <button onclick="sendQuick('best semester')">⭐ Best Semester</button> {% endcomment %}
+            <button onclick="sendQuick('semester topper')">🥇 Semester Topper</button>
+            <button onclick="sendQuick('student cgpa')">📊 Student CGPA</button>
+            <button onclick="sendQuick('compare students')">📊 Compare</button>
         </div>
 
-        
         <div class="input-area">
-    <input
-        id="user-input"
-        placeholder="Ask about students, semesters, marks..."
-        onkeydown="if(event.key === 'Enter') sendMessage()"
-    />
-    <button onclick="sendMessage()">Send</button>
-</div>
-
-
+            <input
+                id="user-input"
+                placeholder="Ask about students, semesters, marks..."
+            />
+            <button onclick="sendMessage()">Send</button>
+        </div>
 
     </div>
 </div>

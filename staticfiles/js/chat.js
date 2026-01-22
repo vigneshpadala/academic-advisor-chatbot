@@ -36,6 +36,7 @@ function sendMessage() {
 
     fetch("/", {
         method: "POST",
+        credentials: "same-origin", // 🔴 REQUIRED
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             "X-CSRFToken": getCookie("csrftoken")
@@ -44,7 +45,9 @@ function sendMessage() {
     })
     .then(res => res.text())
     .then(data => addMessage(data, "bot"))
-    .catch(() => addMessage("❌ Server Down: Could not reach the server.", "bot"));
+    .catch(() =>
+        addMessage("❌ Server Down: Could not reach the server.", "bot")
+    );
 }
 
 /* ===============================
@@ -106,11 +109,9 @@ function convertProfileToCard(text) {
     let html = `<div class="profile-card">`;
 
     lines.forEach(line => {
-        // Section headers
         if (line.startsWith("👤") || line.startsWith("📊")) {
             html += `<h4 class="profile-title">${line}</h4>`;
         }
-        // Key-value rows
         else if (line.includes(":")) {
             const idx = line.indexOf(":");
             const key = line.slice(0, idx);
@@ -138,7 +139,7 @@ function sendQuick(text) {
 }
 
 /* ===============================
-EXPOSE FUNCTIONS (IMPORTANT)
+EXPOSE FUNCTIONS
 =============================== */
 window.sendQuick = sendQuick;
 window.sendMessage = sendMessage;

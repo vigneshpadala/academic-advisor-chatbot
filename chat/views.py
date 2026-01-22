@@ -2,6 +2,8 @@ from .models import PDFDocument
 import re
 from django.shortcuts import render
 from django.http import HttpResponse
+
+
 # ================================
 # 🔹 Helper functions
 # ================================
@@ -302,18 +304,19 @@ def chatbot_response(user_input):
 
 
 
+
+
+
+
 def chat_view(request):
     if request.method == "POST":
         user_msg = request.POST.get("message", "")
         response = chatbot_response(user_msg)
-
-        # If response is HttpResponse (CSV / image)
-        if isinstance(response, HttpResponse):
-            return response
-
         return HttpResponse(response)
 
     return render(request, "chat.html")
+
+
 
 
 

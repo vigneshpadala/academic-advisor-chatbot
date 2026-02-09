@@ -150,7 +150,7 @@ http://127.0.0.1:8000
 ---
 
 ## 🌐 Live Demo
-https://vigneshpadala48.pythonanywhere.com/
+https://academic-advisor-chatbot-7.onrender.com/
 
 ---
 

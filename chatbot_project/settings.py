@@ -17,6 +17,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '.onrender.com',
+    '.vercel.app',
+    'academic-advisor-chatbot-six.vercel.app',
     '127.0.0.1',
     'localhost',
 ]
@@ -132,3 +134,9 @@ ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 
 # Default Primary Key
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'https://*.vercel.app',
+    'https://academic-advisor-chatbot-six.vercel.app',
+]

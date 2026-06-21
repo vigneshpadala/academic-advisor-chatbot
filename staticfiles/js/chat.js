@@ -26,6 +26,11 @@ function addMessage(text, sender) {
 /* ===============================
 SEND MESSAGE
 =============================== */
+function setStatus(message) {
+    const status = document.getElementById("status-text");
+    if (status) status.innerText = message;
+}
+
 function sendMessage() {
     const input = document.getElementById("user-input");
     const msg = input.value.trim();
@@ -33,10 +38,10 @@ function sendMessage() {
 
     addMessage(msg, "user");
     input.value = "";
+    setStatus("Thinking...");
 
     fetch("/", {
         method: "POST",
-        credentials: "same-origin", // 🔴 REQUIRED
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             "X-CSRFToken": getCookie("csrftoken")
@@ -44,10 +49,110 @@ function sendMessage() {
         body: "message=" + encodeURIComponent(msg)
     })
     .then(res => res.text())
-    .then(data => addMessage(data, "bot"))
-    .catch(() =>
-        addMessage("❌ Server Down: Could not reach the server.", "bot")
-    );
+    .then(data => {
+        addMessage(data, "bot");
+        speakText(data);
+    })
+    .catch(() => addMessage("❌ Server Down: Could not reach the server.", "bot"))
+    .finally(() => setStatus("Ready"));
+}
+
+function startSpeechRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        addMessage("❌ Speech recognition is not supported in this browser. Try Chrome, Edge, or Safari.", "bot");
+        setStatus("Ready");
+        return;
+    }
+
+    try {
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        recognition.continuous = false;
+
+        recognition.onstart = () => {
+            document.getElementById("voice-button").innerText = "🎙 Listening...";
+            setStatus("Listening... (speak now)");
+            console.log("Speech recognition started");
+        };
+
+        recognition.onresult = event => {
+            const transcript = event.results[0][0].transcript;
+            console.log("Recognized text:", transcript);
+            document.getElementById("user-input").value = transcript;
+            sendMessage();
+        };
+
+        recognition.onend = () => {
+            document.getElementById("voice-button").innerText = "🎤 Speak";
+            console.log("Speech recognition ended");
+        };
+
+        recognition.onerror = event => {
+            console.error("Speech recognition error:", event.error);
+            document.getElementById("voice-button").innerText = "🎤 Speak";
+            
+            let errorMsg = "❌ Speech recognition error: ";
+            switch (event.error) {
+                case "no-speech":
+                    errorMsg += "No speech detected. Please try again.";
+                    break;
+                case "network":
+                    errorMsg += "Network error. Check your connection.";
+                    break;
+                case "not-allowed":
+                    errorMsg += "Microphone access denied. Check browser permissions.";
+                    break;
+                case "service-not-allowed":
+                    errorMsg += "Speech recognition service not allowed in this context.";
+                    break;
+                case "bad-grammar":
+                    errorMsg += "Grammar error. Please try again.";
+                    break;
+                default:
+                    errorMsg += event.error || "Unknown error.";
+            }
+            addMessage(errorMsg, "bot");
+            setStatus("Ready");
+        };
+
+        recognition.start();
+    } catch (error) {
+        console.error("Error initializing speech recognition:", error);
+        addMessage("❌ Error initializing speech recognition: " + error.message, "bot");
+        setStatus("Ready");
+    }
+}
+
+function speakText(text) {
+    fetch("/speak/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: JSON.stringify({ message: text })
+    })
+    .then(res => {
+        if (!res.ok) throw new Error("TTS request failed");
+        return res.blob();
+    })
+    .then(blob => {
+        const url = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        setStatus("Speaking...");
+        audio.play();
+        audio.onended = () => {
+            URL.revokeObjectURL(url);
+            setStatus("Ready");
+        };
+    })
+    .catch(err => {
+        console.warn("TTS not available or failed", err);
+        setStatus("Ready");
+    });
 }
 
 /* ===============================

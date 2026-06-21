@@ -1,5 +1,13 @@
-from .models import PDFDocument
+import json
 import re
+
+from .models import PDFDocument
+from .tts import generate_speech, is_tts_enabled
+from .vector_search import (
+    is_vector_search_enabled,
+    qdrant_search,
+    generate_ai_response,
+)
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -288,6 +296,11 @@ def chatbot_response(user_input):
 # 🤖 FALLBACK (SMART HELP MESSAGE)
 # =====================================================
 
+    if is_vector_search_enabled():
+        hits = qdrant_search(user_input, top_k=5)
+        if hits:
+            return generate_ai_response(user_input, hits)
+
     return (
     "🤖 I can help with student academic details.\n\n"
     "You can ask things like:\n"
@@ -316,6 +329,28 @@ def chat_view(request):
 
     return render(request, "chat.html")
 
+
+def speak_view(request):
+    if request.method != "POST":
+        return HttpResponse("Method not allowed", status=405)
+
+    if not is_tts_enabled():
+        return HttpResponse("TTS is not configured.", status=501)
+
+    try:
+        payload = json.loads(request.body.decode("utf-8"))
+        message = payload.get("message", "")
+    except Exception:
+        return HttpResponse("Invalid JSON payload.", status=400)
+
+    if not message:
+        return HttpResponse("Missing message to speak.", status=400)
+
+    try:
+        audio_bytes = generate_speech(message)
+        return HttpResponse(audio_bytes, content_type="audio/mpeg")
+    except Exception as exc:
+        return HttpResponse(str(exc), status=500)
 
 
 

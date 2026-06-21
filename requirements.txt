@@ -3,3 +3,6 @@ gunicorn
 pymupdf
 google-generativeai
 whitenoise
+openai
+qdrant-client
+elevenlabs

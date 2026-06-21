@@ -18,6 +18,7 @@
 
         <div class="chat-header">
             <h2>🎓 Academic Advisor Chatbot</h2>
+            <br>
             <p>Student Analytics & Performance Insights</p>
         </div>
 
@@ -30,7 +31,10 @@
             <button onclick="sendQuick('compare students')">📊 Compare</button>
         </div>
 
+        <div id="status-text" class="status-text">Ready</div>
+
         <div class="input-area">
+            <button id="voice-button" onclick="startSpeechRecognition()">🎤 Speak</button>
             <input
                 id="user-input"
                 placeholder="Ask about students, semesters, marks..."
